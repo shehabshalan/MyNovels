@@ -4,22 +4,22 @@
     <v-main>
       <Index />
     </v-main>
-    <Footer />
+    <!-- <Footer /> -->
   </v-app>
 </template>
 
 <script>
 import Index from "../src/components/Index";
 import Navbar from "../src/components/Navbar";
-import Footer from "../src/components/Footer";
+// import Footer from "../src/components/Footer";
 
 export default {
   name: "App",
 
   components: {
     Index,
-    Navbar,
-    Footer
+    Navbar
+    // Footer
   },
 
   data: () => ({
