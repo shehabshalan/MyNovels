@@ -144,6 +144,7 @@ export default {
   display: inline-block;
   font-style: normal;
   font-weight: normal;
+  margin-bottom: 16px;
   cursor: pointer;
   height: 48px;
   width: 200px;

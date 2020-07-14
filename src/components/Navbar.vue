@@ -11,7 +11,15 @@
       />
 
       <v-spacer></v-spacer>
-      <div class="d-flex align-center">
+      <v-img
+        alt="Vuetify Logo"
+        class="shrink mr-2"
+        contain
+        src="../assets/logo-2.svg"
+        transition="scale-transition"
+        width="300"
+      />
+      <!-- <div class="d-flex align-center">
         <v-toolbar-title>كل ما تحتاجه هو تقديم PDF</v-toolbar-title>
         <v-img
           alt="Vuetify Logo"
@@ -21,7 +29,7 @@
           transition="scale-transition"
           width="40"
         />
-      </div>
+      </div>-->
     </v-app-bar>
   </div>
 </template>
