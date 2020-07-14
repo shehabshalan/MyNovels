@@ -2,10 +2,10 @@
   <div class="novel">
     <h1 class="heading dark--text my-6 mr-8">من اعمال كتابنا الرائعين</h1>
     <!-- delete the margin below if it didn't work -->
-    <v-layout row class="mx-sm-16">
-      <v-flex sm12 md6 lg4 v-for="novel in novels" :key="novel.id">
+    <v-row class="mx-sm-16">
+      <v-col class="flex sm12 md6 lg4" v-for="novel in novels" :key="novel.id">
         <v-card
-          class="mb-7 text-start mx-sm-auto"
+          class="mb-3 text-start mx-sm-auto"
           color="#fffbe6"
           width="432px"
           height="305px"
@@ -58,8 +58,8 @@
             </v-card-action>
           </v-img>
         </v-card>
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
