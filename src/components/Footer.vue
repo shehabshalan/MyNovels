@@ -2,7 +2,7 @@
   <v-footer padless>
     <v-card color="#29302E" class="flex">
       <v-card-title>
-        <div class="mr-7"></div>
+        <div class="div-margin"></div>
         <v-icon color="#FFFBE6">mdi-instagram</v-icon>
         <div class="mr-5"></div>
         <v-icon color="#FFFBE6">mdi-facebook</v-icon>
@@ -31,5 +31,8 @@ export default {
 <style scoped>
 .v-icon.v-icon {
   font-size: 5rem;
+}
+.div-margin {
+  margin-right: 100px;
 }
 </style>
