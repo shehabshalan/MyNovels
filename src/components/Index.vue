@@ -1,65 +1,69 @@
+-- good no issue with width but two columns issue
+
 <template>
   <div class="novel">
     <h1 class="heading dark--text my-6 mr-8">من اعمال كتابنا الرائعين</h1>
     <!-- delete the margin below if it didn't work -->
-    <v-row class="mx-sm-16">
-      <v-col class="flex sm12 md6 lg4" v-for="novel in novels" :key="novel.id">
-        <v-card
-          class="mb-3 text-start mx-sm-auto"
-          color="#fffbe6"
-          width="432px"
-          height="305px"
-          :elevation="hover ? 24 : 6"
-        >
-          <v-img>
-            <img class="float-left" src="../assets/novel.png" alt width="194px" height="305px" />
-            <v-card-title class="justify-start">
-              <h1 class="novel-title">{{novel.title}}</h1>
-            </v-card-title>
-            <v-card-text>
-              <ul class="preview-icons">
-                <li>
-                  <span class="icons">
-                    10M
-                    <i class="material-icons">favorite_border</i>
-                  </span>
-                  <span class="icons">
-                    18K
-                    <i class="material-icons">visibility</i>
-                  </span>
+    <v-container fluid>
+      <v-row>
+        <v-col cols="xs12 sm12 md6 lg4" v-for="novel in novels" :key="novel.id">
+          <v-card
+            class="text-start mx-sm-auto"
+            color="#fffbe6"
+            width="432px"
+            height="305px"
+            :elevation="hover ? 24 : 6"
+          >
+            <v-img>
+              <img class="float-left" src="../assets/novel.png" alt width="194px" height="305px" />
+              <v-card-title class="justify-start">
+                <h1 class="novel-title">{{novel.title}}</h1>
+              </v-card-title>
+              <v-card-text>
+                <ul class="preview-icons">
+                  <li>
+                    <span class="icons">
+                      10M
+                      <i class="material-icons">favorite_border</i>
+                    </span>
+                    <span class="icons">
+                      18K
+                      <i class="material-icons">visibility</i>
+                    </span>
 
-                  <span class="icons">
-                    100
-                    <i class="material-icons">how_to_reg</i>
-                  </span>
-                </li>
-              </ul>
-              <p class="novel-snip">{{novel.snippet}}</p>
-            </v-card-text>
-            <div class="chip-right" style="margin-right:10px">
-              <v-chip
-                class="mx-1 mb-3"
-                color="#356859"
-                small
-                font-family="ara"
-                label
-                text-color="white"
-                v-for="(gen, index) in novel.genres"
-                :key="index"
-              >{{gen}}</v-chip>
-            </div>
-
-            <v-card-action>
-              <div class="text-center">
-                <a href="#" class="myButton">اقرأ</a>
-
-                <!-- <v-btn rounded>اقرأ</v-btn> -->
+                    <span class="icons">
+                      100
+                      <i class="material-icons">how_to_reg</i>
+                    </span>
+                  </li>
+                </ul>
+                <p class="novel-snip">{{novel.snippet}}</p>
+              </v-card-text>
+              <div class="chip-right" style="margin-right:10px">
+                <v-chip
+                  class="mx-1 mb-3"
+                  color="#356859"
+                  small
+                  font-family="ara"
+                  label
+                  text-color="white"
+                  v-for="(gen, index) in novel.genres"
+                  :key="index"
+                >{{gen}}</v-chip>
               </div>
-            </v-card-action>
-          </v-img>
-        </v-card>
-      </v-col>
-    </v-row>
+
+              <v-card-action>
+                <div class="text-center">
+                  <a href="#" class="myButton">اقرأ</a>
+
+                  <!-- <v-btn rounded>اقرأ</v-btn> -->
+                </div>
+              </v-card-action>
+            </v-img>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -132,19 +136,24 @@ export default {
 </script>
 
 <style scoped>
-.layout {
+/* .layout {
   display: flex;
   flex: 1 1 auto;
   flex-wrap: wrap !important;
   min-width: 0;
-}
+} */
+/* .col {
+  flex-basis: 0;
+  flex-grow: 0;
+  max-width: 100%;
+} */
 .myButton {
   background-color: #000000;
   border-radius: 50px;
   display: inline-block;
   font-style: normal;
   font-weight: normal;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   cursor: pointer;
   height: 48px;
   width: 200px;
@@ -215,24 +224,8 @@ export default {
   margin-bottom: 5px;
   list-style-type: none;
 }
-/* .v-btn__content {
-  color: #fcff7a !important;
-  font-family: ara;
-  font-size: 20px;
-} */
-/* .v-btn {
-  background-color: #000000 !important;
-  border-radius: 50px;
-} */
-/* .v-btn:not(.v-btn--round).v-size--default {
-  height: 48px !important;
-  min-width: 200px !important;
-  padding: 0 16px;
-} */
-
 .v-chip {
   font-family: ara;
   font-size: 14px !important;
-  margin-bottom: 10px;
 }
 </style>
