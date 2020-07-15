@@ -3,9 +3,9 @@
     <Navbar />
     <v-main>
       <Index />
-      <!-- <v-btn color="#FD5523" dark large fixed bottom right fab class="mr-7">
+      <v-btn color="#FD5523" dark large fixed bottom right fab class="mr-7">
         <v-icon>mdi-plus</v-icon>
-      </v-btn>-->
+      </v-btn>
     </v-main>
     <Footer />
   </v-app>
