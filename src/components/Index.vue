@@ -5,7 +5,7 @@
     <h1 class="heading dark--text my-6 mr-8">من اعمال كتابنا الرائعين</h1>
     <!-- delete the margin below if it didn't work -->
     <v-container fluid>
-      <v-row>
+      <v-row justify="center">
         <v-col cols="xs12 sm12 md6 lg4" v-for="novel in novels" :key="novel.id">
           <v-card
             class="text-start mx-sm-auto"
