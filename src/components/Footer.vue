@@ -35,4 +35,15 @@ export default {
 .div-margin {
   margin-right: 100px;
 }
+
+@media only screen and (max-width: 450px) {
+  .v-icon.v-icon[data-v-40ab164b] {
+    font-size: 3rem;
+    margin-bottom: 30px;
+  }
+  .div-margin[data-v-40ab164b] {
+    margin-right: 23%;
+    /* margin-left: auto; */
+  }
+}
 </style>

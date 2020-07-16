@@ -4,11 +4,12 @@
   <div class="novel">
     <h1 class="heading dark--text my-6 mr-8">من اعمال كتابنا الرائعين</h1>
     <!-- delete the margin below if it didn't work -->
-    <v-container fluid>
-      <v-row justify="center">
+    <v-container class="fill-height" fluid>
+      <v-row>
+        <!-- xs="12" sm="12" md="6" lg="4" -->
         <v-col cols="xs12 sm12 md6 lg4" v-for="novel in novels" :key="novel.id">
           <v-card
-            class="text-start mx-sm-auto"
+            class="text-start mx-auto"
             color="#fffbe6"
             width="432px"
             height="305px"
@@ -253,5 +254,14 @@ export default {
 .v-chip {
   font-family: ara;
   font-size: 14px !important;
+}
+
+@media only screen and (max-width: 450px) {
+  *,
+  ::before,
+  ::after {
+    background-repeat: no-repeat;
+    box-sizing: content-box;
+  }
 }
 </style>
