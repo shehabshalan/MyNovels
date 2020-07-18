@@ -15,7 +15,7 @@
         <v-icon class="mr-7" x-large color="#FFFBE6">mdi-arrow-left</v-icon>
       </router-link>
     </v-app-bar>
-    <v-container fluid>
+    <v-container fluid class="novel-background">
       <!-- LEFT CONTENT -->
       <div class="left-content float-left mr-16 ml-10">
         <v-img :src="novel.cover_image" height="500" width="300" class="img-circle"></v-img>
@@ -140,6 +140,9 @@ export default {
 /* .v-chip__content {
   margin: auto !important;
 } */
+.novel-background {
+  background-color: #fffbe6;
+}
 .left-story-btn {
   background: #fd5523;
   border-radius: 10px;
