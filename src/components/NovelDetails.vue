@@ -2,6 +2,7 @@
   <div>
     <v-app-bar app color="#29302E" height="170">
       <h1>{{this.novel.title}}</h1>
+
       <v-fab-transition>
         <v-btn v-show="!hidden" color="#FD5523" fab dark large absolute bottom right class="mr-16">
           <v-icon>mdi-cards-heart</v-icon>
@@ -15,32 +16,73 @@
         <v-icon class="mr-7" x-large color="#FFFBE6">mdi-arrow-left</v-icon>
       </router-link>
     </v-app-bar>
+
     <v-container fluid class="novel-background">
       <!-- LEFT CONTENT -->
       <div class="left-content float-left mr-16 ml-10">
         <v-img :src="novel.cover_image" height="500" width="300" class="img-circle"></v-img>
         <div class="left-content-info">
-          <span class="headings-left-content">
-            <v-icon class="ml-2 mr-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-eye</v-icon>
+          <ul>
+            <li>
+              <span class="headings-left-content">
+                <v-icon class="left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-eye</v-icon>
+                {{novel.novel_views}}
+                الف مشاهدة
+              </span>
+            </li>
+            <li>
+              <span class="headings-left-content">
+                <v-icon class="left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-heart-outline</v-icon>
+                {{novel.novel_likes}}
+                أحبوا القصة
+              </span>
+            </li>
+
+            <li>
+              <span class="headings-left-content">
+                <v-icon class="left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-account-check</v-icon>
+                {{novel.novel_target}}
+                طلبو تكملة القصة
+              </span>
+            </li>
+
+            <li>
+              <span class="headings-left-content">
+                <v-icon
+                  class="left-story-icons"
+                  color="rgba(0, 0, 0, 0.6)"
+                >mdi-book-open-page-variant</v-icon>
+                {{novel.novel_likes}}
+                عدد الصفحات
+              </span>
+            </li>
+            <li>
+              <span class="headings-left-content">
+                <v-icon class="left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-calendar-range</v-icon>تم النشر في 2020-01-04
+              </span>
+            </li>
+          </ul>
+          <!-- <span class="headings-left-content">
+            <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-eye</v-icon>
             {{novel.novel_views}}
-            مشاهدة
+            الف مشاهدة
           </span>
           <br />
           <span class="headings-left-content">
-            <v-icon class="ml-2 mr-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-heart-outline</v-icon>
+            <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-heart-outline</v-icon>
             {{novel.novel_likes}}
             أحبوا القصة
           </span>
           <br />
           <span class="headings-left-content">
-            <v-icon class="ml-2 mr-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-account-check</v-icon>
+            <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-account-check</v-icon>
             {{novel.novel_target}}
             طلبو تكملة القصة
           </span>
           <br />
           <span class="headings-left-content">
             <v-icon
-              class="ml-2 mr-2 left-story-icons"
+              class="ml-2 left-story-icons"
               color="rgba(0, 0, 0, 0.6)"
             >mdi-book-open-page-variant</v-icon>
             {{novel.novel_likes}}
@@ -48,8 +90,8 @@
           </span>
           <br />
           <span class="headings-left-content">
-            <v-icon class="ml-2 mr-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-calendar-range</v-icon>تم النشر في 2020-01-04
-          </span>
+            <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-calendar-range</v-icon>تم النشر في 2020-01-04
+          </span>-->
           <br />
           <div class="story-buttons mt-5 mx-auto">
             <button class="left-story-btn">إقرأ القصة</button>
@@ -58,6 +100,12 @@
       </div>
       <!-- RIGHT CONTENT -->
       <div class="right-content">
+        <span class="author">
+          <v-avatar color="orange" size="100" class="mb-7 ml-6">
+            <img src="../assets/author.jpg" alt="John" />
+          </v-avatar>للكاتب شهاب شعلان
+        </span>
+
         <div class="story-snippet">
           <span class="headings">
             <v-icon class="ml-7 mr-5 story-icons" color="#356859">mdi-information</v-icon>نبذة عن القصة
@@ -140,6 +188,22 @@ export default {
 /* .v-chip__content {
   margin: auto !important;
 } */
+.author {
+  font-family: ara;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 43px;
+  text-align: right;
+  text-transform: uppercase;
+  color: #000000;
+  /* color: #f8e71c; */
+}
+ul {
+  display: inline;
+  list-style-type: none;
+  text-align: inherit;
+}
 .novel-background {
   background-color: #fffbe6;
 }
@@ -168,10 +232,10 @@ export default {
   font-weight: normal;
   font-size: 25px;
   line-height: 38px;
+  vertical-align: inherit;
   color: #000000;
 }
 .left-content-info {
-  text-align: center;
   margin-top: 20px;
 }
 
