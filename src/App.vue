@@ -1,29 +1,16 @@
 <template>
-  <v-app>
-    <Navbar />
+  <v-app class="black">
     <v-main>
-      <Index />
-      <v-btn color="#FD5523" dark large fixed bottom right fab class="mr-7">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+      <router-view />
     </v-main>
-    <Footer />
   </v-app>
 </template>
 
 <script>
-import Index from "../src/components/Index";
-import Navbar from "../src/components/Navbar";
-import Footer from "../src/components/Footer";
-
 export default {
   name: "App",
 
-  components: {
-    Index,
-    Navbar,
-    Footer
-  },
+  components: {},
 
   data: () => ({
     //

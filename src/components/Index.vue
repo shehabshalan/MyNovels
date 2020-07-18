@@ -1,7 +1,10 @@
--- good no issue with width but two columns issue
 
 <template>
   <div class="novel">
+    <Navbar />
+    <v-btn color="#FD5523" dark fab large fixed bottom right class="mr-7">
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
     <h1 class="heading dark--text my-6 mr-8">من اعمال كتابنا الرائعين</h1>
     <!-- delete the margin below if it didn't work -->
     <v-container class="fill-height" fluid>
@@ -21,6 +24,7 @@
                 <h1 class="novel-title">{{novel.title}}</h1>
               </v-card-title>
               <v-card-text>
+                <!-- <p>{{novel.novel_slug}}</p> -->
                 <ul class="preview-icons">
                   <li>
                     <span class="icons">
@@ -38,7 +42,7 @@
                     </span>
                   </li>
                 </ul>
-                <p class="novel-snip">{{novel.snippet}}</p>
+                <p class="novel-snip">{{novel.snippet.substring(0,150) + "..."}}</p>
               </v-card-text>
               <div class="chip-right" style="margin-right:10px">
                 <v-chip
@@ -55,7 +59,9 @@
 
               <v-card-action>
                 <div class="text-center">
-                  <a href="#" class="myButton">اقرأ</a>
+                  <router-link :to="{name: 'NovelDetails', params: {novel_slug: novel.novel_slug}}">
+                    <button class="myButton">اقرأ</button>
+                  </router-link>
 
                   <!-- <v-btn rounded>اقرأ</v-btn> -->
                 </div>
@@ -65,14 +71,21 @@
         </v-col>
       </v-row>
     </v-container>
+    <Footer />
   </div>
 </template>
 
 <script>
 import db from "../firebase/init";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default {
   name: "Index",
+  components: {
+    Navbar,
+    Footer
+  },
   data() {
     return {
       novels: []
