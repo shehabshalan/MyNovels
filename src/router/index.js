@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../components/Index'
 import NovelDetails from '../components/NovelDetails.vue'
+import Author from '../components/Author'
 Vue.use(VueRouter)
 
 const routes = [
@@ -22,6 +23,11 @@ const routes = [
     path: '/novel-details/:novel_slug',
     name: 'NovelDetails',
     component: NovelDetails
+  },
+  {
+    path: '/author/:author_slug',
+    name: 'Author',
+    component: Author
   }
 ]
 

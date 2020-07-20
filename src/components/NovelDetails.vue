@@ -101,11 +101,16 @@
       <!-- RIGHT CONTENT -->
       <div class="right-content">
         <span class="author">
-          <v-avatar color="orange" size="100" class="mb-7 ml-6">
-            <img src="../assets/author.jpg" alt="John" />
-          </v-avatar>للكاتب شهاب شعلان
+          <router-link :to="{name: 'Author', params: {author_slug: novel.author_slug}}">
+            <v-avatar v-if="novel.author_avatar" color="white" size="100" class="mb-7 ml-6">
+              <img :src="novel.author_avatar" alt="author" />
+            </v-avatar>
+            <v-avatar v-else color="white" size="100" class="mb-7 ml-6">
+              <img src="../assets/avatar.png" alt="author" />
+            </v-avatar>
+            للكاتب {{novel.author}}
+          </router-link>
         </span>
-
         <div class="story-snippet">
           <span class="headings">
             <v-icon class="ml-7 mr-5 story-icons" color="#356859">mdi-information</v-icon>نبذة عن القصة
@@ -188,6 +193,10 @@ export default {
 /* .v-chip__content {
   margin: auto !important;
 } */
+.v-application a {
+  color: black;
+  text-decoration: none;
+}
 .author {
   font-family: ara;
   font-style: normal;
