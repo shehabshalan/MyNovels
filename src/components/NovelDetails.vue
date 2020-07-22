@@ -94,7 +94,9 @@
           </span>-->
           <br />
           <div class="story-buttons mt-5 mx-auto">
-            <button class="left-story-btn">إقرأ القصة</button>
+            <router-link :to="{name: 'Read', params: {novel_slug: novel.novel_slug}}">
+              <button class="left-story-btn">إقرأ القصة</button>
+            </router-link>
           </div>
         </div>
       </div>

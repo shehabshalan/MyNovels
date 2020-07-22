@@ -2,9 +2,12 @@
 <template>
   <div class="novel">
     <Navbar />
-    <v-btn color="#FD5523" dark fab large fixed bottom right class="mr-7">
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
+    <router-link :to="{name: 'UploadNovel'}">
+      <v-btn color="#FD5523" dark fab large fixed bottom right class="mr-7">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </router-link>
+
     <h1 class="heading dark--text my-6 mr-8">من اعمال كتابنا الرائعين</h1>
     <!-- delete the margin below if it didn't work -->
     <v-container class="fill-height" fluid>

@@ -1,16 +1,19 @@
 <template>
   <div>
     <v-app-bar app color="#29302E" height="120" dark>
-      <v-img
-        alt="Vuetify Logo"
-        class="shrink mr-2"
-        contain
-        src="../assets/banner.svg"
-        transition="scale-transition"
-        width="300"
-      />
+      <router-link :to="{name: 'Index'}">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="../assets/banner.svg"
+          transition="scale-transition"
+          width="300"
+        />
+      </router-link>
 
       <v-spacer></v-spacer>
+
       <v-img
         alt="Vuetify Logo"
         class="shrink mr-2"
