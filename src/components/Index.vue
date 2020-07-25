@@ -2,11 +2,19 @@
 <template>
   <div class="novel">
     <Navbar />
-    <router-link :to="{name: 'UploadNovel'}">
-      <v-btn color="#FD5523" dark fab large fixed bottom right class="mr-7">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </router-link>
+    <v-btn
+      color="#FD5523"
+      dark
+      fab
+      large
+      fixed
+      bottom
+      right
+      class="mr-7"
+      href="https://forms.gle/qBSF8vWFefWMQ8eK9"
+    >
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
 
     <h1 class="heading dark--text my-6 mr-8">من اعمال كتابنا الرائعين</h1>
     <!-- delete the margin below if it didn't work -->
@@ -87,11 +95,11 @@ export default {
   name: "Index",
   components: {
     Navbar,
-    Footer
+    Footer,
   },
   data() {
     return {
-      novels: []
+      novels: [],
       // novels: [
       //   {
       //     title: "خطوط الحياة",
@@ -164,9 +172,9 @@ export default {
   created() {
     db.collection("Novels")
       .get()
-      .then(snapshot => {
+      .then((snapshot) => {
         //snapshot is a view of that collection we have meaning the data we stored
-        snapshot.forEach(doc => {
+        snapshot.forEach((doc) => {
           //we grabed each doc in that snapshot
           // console.log(doc.data());
           let novel = doc.data();
@@ -174,7 +182,7 @@ export default {
           this.novels.push(novel);
         });
       });
-  }
+  },
 };
 </script>
 

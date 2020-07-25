@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Index from '../components/Index'
 import NovelDetails from '../components/NovelDetails.vue'
 import Author from '../components/Author'
-import UploadNovel from '../components/UploadNovel'
 import Read from '../components/Read'
 
 Vue.use(VueRouter)
@@ -31,11 +30,6 @@ const routes = [
     path: '/author/:author_slug',
     name: 'Author',
     component: Author
-  },
-  {
-    path: '/upload-novel',
-    name: 'UploadNovel',
-    component: UploadNovel
   },
   {
     path: '/read/:novel_slug',
