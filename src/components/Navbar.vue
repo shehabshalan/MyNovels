@@ -18,7 +18,7 @@
         alt="Vuetify Logo"
         class="shrink mr-2"
         contain
-        src="../assets/logo-2.svg"
+        src="../assets/everything.svg"
         transition="scale-transition"
         width="300"
       />
@@ -38,7 +38,7 @@
 </template>
 <script>
 export default {
-  name: "Navbar"
+  name: "Navbar",
 };
 </script>
 <style>
