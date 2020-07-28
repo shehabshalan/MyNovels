@@ -282,7 +282,7 @@ export default {
   font-weight: normal;
   font-size: 24px;
   line-height: 32px;
-  margin-bottom: -10px;
+  margin-bottom: -20px;
   color: #356859;
 }
 .novel-snip {
@@ -439,7 +439,7 @@ ul {
 }
 
 .right-content {
-  margin-top: 70px;
+  margin-top: 40px;
   padding-right: 70px;
 }
 .headings {

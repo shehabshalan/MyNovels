@@ -4,7 +4,17 @@
       <h1>{{this.novel.title}}</h1>
 
       <v-fab-transition>
-        <v-btn v-show="!hidden" color="#FD5523" fab dark large absolute bottom right class="mr-16">
+        <v-btn
+          v-show="!hidden"
+          color="#FD5523"
+          fab
+          dark
+          large
+          absolute
+          bottom
+          right
+          class="like-icon"
+        >
           <v-icon>mdi-cards-heart</v-icon>
         </v-btn>
       </v-fab-transition>
@@ -195,6 +205,9 @@ export default {
 /* .v-chip__content {
   margin: auto !important;
 } */
+.like-icon {
+  margin-right: 75px;
+}
 .v-application a {
   color: black;
   text-decoration: none;
@@ -306,7 +319,7 @@ body {
   background: aqua;
 }
 .right-content {
-  margin-top: 70px;
+  margin-top: 40px;
   padding-right: 70px;
 }
 .headings {
