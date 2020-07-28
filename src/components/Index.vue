@@ -16,69 +16,71 @@
       <v-icon>mdi-plus</v-icon>
     </v-btn>
 
-    <h1 class="heading dark--text my-6 mr-8">من اعمال كتابنا الرائعين</h1>
+    <h1 class="heading dark--text mb-n1 mt-6 mr-8">من اعمال كتابنا الرائعين</h1>
     <!-- delete the margin below if it didn't work -->
     <v-container class="fill-height" fluid>
       <v-row>
         <!-- xs="12" sm="12" md="6" lg="4" -->
         <v-col cols="xs12 sm12 md6 lg4" v-for="novel in novels" :key="novel.id">
-          <v-card
-            class="text-start mx-auto"
-            color="#fffbe6"
-            width="432px"
-            height="305px"
-            :elevation="hover ? 24 : 6"
-          >
-            <v-img>
-              <img class="float-left" :src="novel.cover_image" alt width="194px" height="305px" />
-              <v-card-title class="justify-start">
-                <h1 class="novel-title">{{novel.title}}</h1>
-              </v-card-title>
-              <v-card-text>
-                <!-- <p>{{novel.novel_slug}}</p> -->
-                <ul class="preview-icons">
-                  <li>
-                    <span class="icons">
-                      {{novel.novel_likes}}
-                      <i class="material-icons">favorite_border</i>
-                    </span>
-                    <span class="icons">
-                      {{novel.novel_views}}
-                      <i class="material-icons">visibility</i>
-                    </span>
+          <router-link :to="{name: 'NovelDetails', params: {novel_slug: novel.novel_slug}}">
+            <v-card
+              class="text-start mx-auto"
+              color="#fffbe6"
+              width="432px"
+              height="305px"
+              :elevation="hover ? 24 : 6"
+            >
+              <v-img>
+                <img class="float-left" :src="novel.cover_image" alt width="194px" height="305px" />
+                <v-card-title class="justify-start">
+                  <h1 class="novel-title">{{novel.title}}</h1>
+                </v-card-title>
+                <v-card-text>
+                  <!-- <p>{{novel.novel_slug}}</p> -->
+                  <ul class="preview-icons">
+                    <li>
+                      <span class="icons">
+                        {{novel.novel_likes}}
+                        <i class="material-icons">favorite_border</i>
+                      </span>
+                      <span class="icons">
+                        {{novel.novel_views}}
+                        <i class="material-icons">visibility</i>
+                      </span>
 
-                    <span class="icons">
-                      {{novel.novel_target}}
-                      <i class="material-icons">how_to_reg</i>
-                    </span>
-                  </li>
-                </ul>
-                <p class="novel-snip">{{novel.snippet.substring(0,150) + "..."}}</p>
-              </v-card-text>
-              <div class="chip-right" style="margin-right:10px">
-                <v-chip
-                  class="mx-1 mb-3"
-                  color="#356859"
-                  small
-                  font-family="ara"
-                  label
-                  text-color="white"
-                  v-for="(gen, index) in novel.genres"
-                  :key="index"
-                >{{gen}}</v-chip>
-              </div>
-
-              <v-card-action>
-                <div class="text-center">
-                  <router-link :to="{name: 'NovelDetails', params: {novel_slug: novel.novel_slug}}">
-                    <button class="myButton">اقرأ</button>
-                  </router-link>
-
-                  <!-- <v-btn rounded>اقرأ</v-btn> -->
+                      <span class="icons">
+                        {{novel.novel_target}}
+                        <i class="material-icons">how_to_reg</i>
+                      </span>
+                    </li>
+                  </ul>
+                  <p class="novel-snip">{{novel.snippet.substring(0,150) + "..."}}</p>
+                </v-card-text>
+                <div class="chip-right" style="margin-right:10px">
+                  <v-chip
+                    class="mx-1 mb-3"
+                    color="#356859"
+                    small
+                    font-family="ara"
+                    label
+                    text-color="white"
+                    v-for="(gen, index) in novel.genres"
+                    :key="index"
+                  >{{gen}}</v-chip>
                 </div>
-              </v-card-action>
-            </v-img>
-          </v-card>
+
+                <v-card-action>
+                  <div class="text-center">
+                    <router-link :to="{name: 'Read', params: {novel_slug: novel.novel_slug}}">
+                      <button class="myButton">اقرأ</button>
+                    </router-link>
+
+                    <!-- <v-btn rounded>اقرأ</v-btn> -->
+                  </div>
+                </v-card-action>
+              </v-img>
+            </v-card>
+          </router-link>
         </v-col>
       </v-row>
     </v-container>
@@ -198,6 +200,9 @@ export default {
   flex-grow: 0;
   max-width: 100%;
 } */
+.v-application a {
+  text-decoration: none;
+}
 .myButton {
   background-color: #000000;
   border-radius: 50px;

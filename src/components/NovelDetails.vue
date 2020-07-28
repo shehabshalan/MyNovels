@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app color="#29302E" height="170">
+    <v-app-bar app color="#29302E" height="140">
       <h1>{{this.novel.title}}</h1>
 
       <v-fab-transition>
@@ -93,7 +93,7 @@
             <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-calendar-range</v-icon>تم النشر في 2020-01-04
           </span>-->
           <br />
-          <div class="story-buttons mt-5 mx-auto">
+          <div class="story-buttons mt-1 mx-auto">
             <router-link :to="{name: 'Read', params: {novel_slug: novel.novel_slug}}">
               <button class="left-story-btn">إقرأ القصة</button>
             </router-link>
@@ -102,17 +102,6 @@
       </div>
       <!-- RIGHT CONTENT -->
       <div class="right-content">
-        <span class="author">
-          <router-link :to="{name: 'Author', params: {author_slug: novel.author_slug}}">
-            <v-avatar v-if="novel.author_avatar" color="white" size="100" class="mb-7 ml-6">
-              <img :src="novel.author_avatar" alt="author" />
-            </v-avatar>
-            <v-avatar v-else color="white" size="100" class="mb-7 ml-6">
-              <img src="../assets/avatar.png" alt="author" />
-            </v-avatar>
-            للكاتب {{novel.author}}
-          </router-link>
-        </span>
         <div class="story-snippet">
           <span class="headings">
             <v-icon class="ml-7 mr-5 story-icons" color="#356859">mdi-information</v-icon>نبذة عن القصة
@@ -163,6 +152,17 @@
             </div>
           </span>
         </div>
+        <span class="author">
+          <router-link :to="{name: 'Author', params: {author_slug: novel.author_slug}}">
+            <v-avatar v-if="novel.author_avatar" color="white" size="100" class="mb-7 ml-6">
+              <img :src="novel.author_avatar" alt="author" />
+            </v-avatar>
+            <v-avatar v-else color="white" size="100" class="mb-7 ml-6">
+              <img src="../assets/avatar.png" alt="author" />
+            </v-avatar>
+            <span class="author-name">للكاتب {{novel.author}}</span>
+          </router-link>
+        </span>
       </div>
     </v-container>
   </div>
@@ -173,7 +173,7 @@ export default {
   name: "NovelDetails",
   data() {
     return {
-      novel: null
+      novel: null,
     };
   },
 
@@ -181,14 +181,14 @@ export default {
     let ref = db
       .collection("Novels")
       .where("novel_slug", "==", this.$route.params.novel_slug);
-    ref.get().then(snapshot => {
-      snapshot.forEach(doc => {
+    ref.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
         console.log(doc.data());
         this.novel = doc.data();
         this.novel.id = doc.id;
       });
     });
-  }
+  },
 };
 </script>
 <style scoped>
@@ -207,8 +207,11 @@ export default {
   line-height: 43px;
   text-align: right;
   text-transform: uppercase;
-  color: #000000;
+  color: #fd5523;
   /* color: #f8e71c; */
+}
+.author-name {
+  color: #fd5523;
 }
 ul {
   display: inline;
@@ -236,11 +239,13 @@ ul {
 }
 .left-story-icons {
   font-size: 30px;
+  margin-left: 16px;
 }
 .headings-left-content {
   font-family: ara;
   font-style: normal;
   font-weight: normal;
+  margin-right: 50px;
   font-size: 25px;
   line-height: 38px;
   vertical-align: inherit;
@@ -285,7 +290,8 @@ h1 {
   font-family: rawa;
   font-style: normal;
   font-weight: normal;
-  font-size: 70px;
+  font-size: 50px;
+  margin-right: 150px !important;
   /* line-height: 92px; */
   margin: 0;
   padding: 0;
@@ -320,6 +326,7 @@ body {
   text-align: justify;
   font-size: 20px;
   line-height: 29px;
+  margin-right: 100px;
   text-transform: capitalize;
   margin-top: 16px;
   margin-bottom: 40px;

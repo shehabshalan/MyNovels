@@ -3,11 +3,18 @@
     <v-card color="#29302E" class="flex">
       <v-card-title>
         <div class="div-margin"></div>
-        <v-icon color="#FFFBE6">mdi-instagram</v-icon>
+        <a href="http://bit.ly/moofiyTvInstagram" style="text-decoration:none;">
+          <v-icon color="#FFFBE6">mdi-instagram</v-icon>
+        </a>
         <div class="mr-5"></div>
-        <v-icon color="#FFFBE6">mdi-facebook</v-icon>
+        <a href="http://bit.ly/MoofiyTvFacebook" style="text-decoration:none;">
+          <v-icon color="#FFFBE6">mdi-facebook</v-icon>
+        </a>
+
         <div class="mr-5"></div>
-        <v-icon color="#FFFBE6">mdi-youtube</v-icon>
+        <a href="https://bit.ly/MoofiyTvYoutube" style="text-decoration:none;">
+          <v-icon color="#FFFBE6">mdi-youtube</v-icon>
+        </a>
 
         <v-spacer></v-spacer>
 
@@ -25,7 +32,7 @@
 </template>
 <script>
 export default {
-  name: "Footer"
+  name: "Footer",
 };
 </script>
 <style scoped>

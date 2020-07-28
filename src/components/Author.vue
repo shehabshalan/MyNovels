@@ -1,12 +1,11 @@
 <template>
   <div v-if="novels">
-    <v-app-bar app color="#29302E" height="170">
+    <v-app-bar app color="#29302E" height="140">
       <v-card-title class="mt-10">
-        <h1>{{novel.author}}</h1>
+        <h1 class="author-name">{{novel.author}}</h1>
         <v-card-text>
           <br />
-          <br />
-          <h3>{{novel.author_occ}}</h3>
+          <h3 class="mb-12">{{novel.author_occ}}</h3>
         </v-card-text>
       </v-card-title>
       <v-spacer></v-spacer>
@@ -174,7 +173,7 @@ export default {
   data() {
     return {
       novels: [],
-      novel: null
+      novel: null,
       // novels: [
       //   {
       //     title: "خطوط الحياة",
@@ -204,8 +203,8 @@ export default {
     let ref = db
       .collection("Novels")
       .where("author_slug", "==", this.$route.params.author_slug);
-    ref.get().then(snapshot => {
-      snapshot.forEach(doc => {
+    ref.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
         console.log(doc.data());
 
         let novel = doc.data();
@@ -217,7 +216,7 @@ export default {
         this.novel.id = doc.id;
       });
     });
-  }
+  },
 };
 </script>
 
@@ -333,11 +332,13 @@ export default {
   display: inline;
 }
 
-h1 {
+.author-name {
   font-family: rawa;
   font-style: normal;
   font-weight: normal;
-  font-size: 70px;
+  font-size: 50px;
+  margin-right: 140px !important;
+
   /* line-height: 92px; */
   margin: 0;
   padding: 0;
@@ -347,6 +348,8 @@ h1 {
 }
 h3 {
   font-family: ara;
+  margin-right: 128px;
+
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
@@ -454,6 +457,8 @@ ul {
   font-weight: normal;
   margin-right: 60px;
   text-align: justify;
+  margin-right: 100px;
+
   font-size: 20px;
   line-height: 29px;
   text-transform: capitalize;
