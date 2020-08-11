@@ -60,7 +60,9 @@
             <div class="content">
               <p>{{novel.snippet}}</p>
               <div class="story-buttons mt-8">
-                <button class="story-btn mx-10">كيف ترى كتاباتي ؟</button>
+                <a href="https://forms.gle/qBSF8vWFefWMQ8eK9">
+                  <button class="story-btn mx-10">كيف ترى كتاباتي ؟</button>
+                </a>
               </div>
             </div>
           </span>
@@ -166,7 +168,7 @@
 </template>
 
 <script>
-import db from "../firebase/init";
+import db from "../db";
 
 export default {
   name: "Author",
@@ -460,7 +462,7 @@ ul {
   margin-right: 100px;
 
   font-size: 20px;
-  line-height: 29px;
+  /* line-height: 29px; */
   text-transform: capitalize;
   margin-top: 16px;
   margin-bottom: 40px;

@@ -1,7 +1,6 @@
-import firebase from 'firebase'
-import 'firebase/firestore'
-//initalize firebase
-var firebaseConfig = {
+import firebase from 'firebase';
+
+const firebaseConfig = {
     apiKey: "AIzaSyAACCs6WgEAdChSsZ_4vwI_Id79WC0Njbo",
     authDomain: "novel-app-26cd5.firebaseapp.com",
     databaseURL: "https://novel-app-26cd5.firebaseio.com",
@@ -12,6 +11,5 @@ var firebaseConfig = {
     measurementId: "G-PVMGFZN1XF"
 };
 // Initialize Firebase
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-// firebaseApp.firestore().settings({ timestampsInSnapshots:true})
-export default firebaseApp.firestore()
+firebase.initializeApp(firebaseConfig);
+export default firebase

@@ -10,15 +10,13 @@
 export default {
   name: "App",
 
-  components: {},
-
   data: () => ({
     //
   }),
 
   created() {
     this.$vuetify.rtl = true;
-  }
+  },
 };
 </script>
 <style>

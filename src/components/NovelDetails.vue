@@ -5,8 +5,24 @@
 
       <v-fab-transition>
         <v-btn
+          v-if="isLoggedIn"
+          @click="likeStory"
           v-show="!hidden"
-          color="#FD5523"
+          :color="this.color"
+          fab
+          dark
+          large
+          absolute
+          bottom
+          right
+          class="like-icon"
+        >
+          <v-icon>mdi-cards-heart</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="!isLoggedIn"
+          v-show="!hidden"
+          :color="this.color"
           fab
           dark
           large
@@ -72,36 +88,7 @@
               </span>
             </li>
           </ul>
-          <!-- <span class="headings-left-content">
-            <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-eye</v-icon>
-            {{novel.novel_views}}
-            الف مشاهدة
-          </span>
-          <br />
-          <span class="headings-left-content">
-            <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-heart-outline</v-icon>
-            {{novel.novel_likes}}
-            أحبوا القصة
-          </span>
-          <br />
-          <span class="headings-left-content">
-            <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-account-check</v-icon>
-            {{novel.novel_target}}
-            طلبو تكملة القصة
-          </span>
-          <br />
-          <span class="headings-left-content">
-            <v-icon
-              class="ml-2 left-story-icons"
-              color="rgba(0, 0, 0, 0.6)"
-            >mdi-book-open-page-variant</v-icon>
-            {{novel.novel_likes}}
-            عدد الصفحات
-          </span>
-          <br />
-          <span class="headings-left-content">
-            <v-icon class="ml-2 left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-calendar-range</v-icon>تم النشر في 2020-01-04
-          </span>-->
+
           <br />
           <div class="story-buttons mt-1 mx-auto">
             <router-link :to="{name: 'Read', params: {novel_slug: novel.novel_slug}}">
@@ -145,8 +132,16 @@
               <p>يحتاج الكاتب الى {{novel.novel_target}} طلب لإكمال القصة وقام 95 شخض بطلب إكمال القصة</p>
               <strong>مع العلم بأن تكملة القصة سوف تباع ب 5 دولارات</strong>
               <div class="story-buttons mt-8">
-                <button class="story-btn mx-10">إطلب تكملة القصة</button>
-                <button class="story-btn">أعطنا رأيك الصادق بما قرأت</button>
+                <button
+                  class="story-btn mx-10"
+                  v-if="isLoggedIn"
+                  @click="requestStory"
+                >إطلب تكملة القصة</button>
+                <button class="story-btn mx-10" v-if="!isLoggedIn">إطلب تكملة القصة</button>
+
+                <a href="https://forms.gle/qBSF8vWFefWMQ8eK9">
+                  <button class="story-btn">أعطنا رأيك الصادق بما قرأت</button>
+                </a>
               </div>
             </div>
           </span>
@@ -178,13 +173,43 @@
   </div>
 </template>
 <script>
-import db from "../firebase/init";
+import { mapState } from "vuex";
+
+import db from "../db";
 export default {
   name: "NovelDetails",
   data() {
     return {
       novel: null,
+      color: null,
+      isLiked: false,
+      isRequested: false,
     };
+  },
+  computed: mapState("auth", ["user", "isLoggedIn"]),
+
+  methods: {
+    likeStory() {
+      if (this.isLoggedIn && this.isLiked) {
+        this.color = "#000000";
+        this.novel.novel_likes--;
+        this.isLiked = false;
+      } else {
+        this.color = "#FD5523";
+        this.novel.novel_likes++;
+        this.isLiked = true;
+      }
+    },
+    requestStory() {
+      if (this.isLoggedIn && this.isRequested) {
+        this.novel.novel_target--;
+        this.isRequested = false;
+      } else {
+        this.novel.novel_target++;
+        this.isRequested = true;
+      }
+      console.log(this.isRequested);
+    },
   },
 
   created() {
@@ -344,5 +369,75 @@ body {
   margin-top: 16px;
   margin-bottom: 40px;
   color: #000000;
+}
+
+@media only screen and (max-width: 450px) {
+  .content {
+    font-family: tajawal;
+    font-style: normal;
+    font-weight: normal;
+    text-align: justify, center;
+    font-size: 20px;
+    line-height: 29px;
+    margin-right: -30px;
+    text-transform: capitalize;
+    margin-top: 16px;
+    margin-bottom: 40px;
+    color: #000000;
+  }
+  .story-icons {
+    font-size: 50px;
+    margin-right: -40px !important;
+  }
+  .left-story-btn {
+    background: #fd5523;
+    border-radius: 10px;
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    /* margin-bottom: 16px; */
+    cursor: pointer;
+    margin-bottom: 20px;
+    height: 52px;
+    width: 300px;
+    color: white;
+    font-family: ara;
+    font-size: 24px;
+    line-height: 50px;
+    text-decoration: none;
+  }
+  .author {
+    font-family: ara;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 43px;
+    text-align: right;
+    text-transform: uppercase;
+    margin-right: -30px;
+
+    color: #fd5523;
+    /* color: #f8e71c; */
+  }
+  .author-name {
+    color: #fd5523;
+  }
+  .story-btn {
+    background: #000000;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: normal;
+    display: inline-block;
+
+    /* margin-bottom: 16px; */
+    cursor: pointer;
+    height: 56px;
+    width: 324px;
+    color: #fcff7a;
+    font-family: ara;
+    font-size: 24px;
+    line-height: 50px;
+    text-decoration: none;
+  }
 }
 </style>

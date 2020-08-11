@@ -1,4 +1,4 @@
-<template>
+<template >
   <div>
     <v-app-bar app color="#29302E" height="120" dark>
       <router-link :to="{name: 'Index'}">
@@ -13,32 +13,42 @@
       </router-link>
 
       <v-spacer></v-spacer>
-
+      <v-btn text v-if="!isLoggedIn" @click="login">
+        <span class="login-user">تسجيل الدخول</span>
+      </v-btn>
+      <v-btn text v-if="isLoggedIn" @click="logout">
+        <span class="login-user">تسجيل الخروج</span>
+        <span class="login-user">{{user.name}}</span>
+      </v-btn>
       <v-img
+        v-if="!isLoggedIn"
         alt="Vuetify Logo"
         class="shrink mr-2"
         contain
-        src="../assets/everything.svg"
+        src="../assets/user.svg"
         transition="scale-transition"
-        width="300"
+        width="50"
       />
-      <!-- <div class="d-flex align-center">
-        <v-toolbar-title>كل ما تحتاجه هو تقديم PDF</v-toolbar-title>
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-7"
-          contain
-          src="../assets/book.png"
-          transition="scale-transition"
-          width="40"
-        />
-      </div>-->
+      <v-img
+        v-if="isLoggedIn"
+        alt="Vuetify Logo"
+        class="shrink mr-2"
+        contain
+        :src="user.image"
+        transition="scale-transition"
+        width="50"
+      />
     </v-app-bar>
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
+
+// import { db } from "../firebase";
 export default {
   name: "Navbar",
+  computed: mapState("auth", ["user", "isLoggedIn"]),
+  methods: mapActions("auth", ["login", "logout"]),
 };
 </script>
 <style>
@@ -49,6 +59,14 @@ export default {
   font-size: 35px !important;
   color: #fffbe6;
 }
-.title-intro {
+.login-user {
+  font-family: ara;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  /* line-height: 29px; */
+  text-transform: capitalize;
+
+  color: #fffbe6;
 }
 </style>
