@@ -13,10 +13,6 @@ export default {
   data: () => ({
     //
   }),
-
-  created() {
-    this.$vuetify.rtl = true;
-  },
 };
 </script>
 <style>

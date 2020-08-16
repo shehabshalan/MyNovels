@@ -1,8 +1,13 @@
 <template>
   <div>
     <v-app-bar app color="#29302E" height="140">
-      <h1>{{this.novel.title}}</h1>
+      <router-link :to="{name: 'Index'}">
+        <v-icon class="mr-7" x-large color="#FFFBE6">mdi-arrow-left</v-icon>
+      </router-link>
+      <SocialSharing />
+      <v-spacer></v-spacer>
 
+      <h1>{{this.novel.title}}</h1>
       <v-fab-transition>
         <v-btn
           v-if="isLoggedIn"
@@ -34,13 +39,6 @@
           <v-icon>mdi-cards-heart</v-icon>
         </v-btn>
       </v-fab-transition>
-      <v-spacer></v-spacer>
-      <router-link :to="{name: 'Index'}">
-        <v-icon x-large color="#FFFBE6">mdi-share-variant</v-icon>
-      </router-link>
-      <router-link :to="{name: 'Index'}">
-        <v-icon class="mr-7" x-large color="#FFFBE6">mdi-arrow-left</v-icon>
-      </router-link>
     </v-app-bar>
 
     <v-container fluid class="novel-background">
@@ -174,10 +172,13 @@
 </template>
 <script>
 import { mapState } from "vuex";
-
+import SocialSharing from "./SocialSharing";
 import db from "../db";
 export default {
   name: "NovelDetails",
+  components: {
+    SocialSharing,
+  },
   data() {
     return {
       novel: null,
@@ -208,7 +209,10 @@ export default {
         this.novel.novel_target++;
         this.isRequested = true;
       }
-      console.log(this.isRequested);
+      // console.log(this.isRequested);
+    },
+    socialPop() {
+      this.$alert("Hello Vue Simple Alert.");
     },
   },
 
@@ -218,7 +222,7 @@ export default {
       .where("novel_slug", "==", this.$route.params.novel_slug);
     ref.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        console.log(doc.data());
+        // console.log(doc.data());
         this.novel = doc.data();
         this.novel.id = doc.id;
       });
@@ -274,6 +278,9 @@ ul {
   font-size: 24px;
   line-height: 50px;
   text-decoration: none;
+}
+.left-content {
+  direction: rtl;
 }
 .left-story-icons {
   font-size: 30px;
@@ -344,6 +351,7 @@ body {
   background: aqua;
 }
 .right-content {
+  direction: rtl;
   margin-top: 40px;
   padding-right: 70px;
 }

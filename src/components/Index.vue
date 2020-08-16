@@ -2,6 +2,7 @@
 <template>
   <div class="novel">
     <Navbar />
+
     <v-btn
       color="#FD5523"
       dark
@@ -16,10 +17,10 @@
       <v-icon>mdi-plus</v-icon>
     </v-btn>
 
-    <h1 class="heading dark--text mb-n1 mt-6 mr-8">من اعمال كتابنا الرائعين</h1>
+    <h1 class="heading dark--text mb-n1 mt-6 mr-8 text-right">من اعمال كتابنا الرائعين</h1>
 
     <!-- delete the margin below if it didn't work -->
-    <v-container class="fill-height" fluid>
+    <v-container class="fill-height index-content" fluid>
       <v-row>
         <!-- xs="12" sm="12" md="6" lg="4" -->
         <v-col cols="xs12 sm12 md6 lg4" v-for="novel in novels" :key="novel.id">
@@ -33,9 +34,7 @@
             >
               <v-img>
                 <img class="float-left" :src="novel.cover_image" alt width="194px" height="305px" />
-                <v-card-title class="justify-start">
-                  <h1 class="novel-title">{{novel.title}}</h1>
-                </v-card-title>
+                <v-card-title class="justify-start novel-title">{{novel.title}}</v-card-title>
                 <v-card-text>
                   <!-- <p>{{novel.novel_slug}}</p> -->
                   <ul class="preview-icons">
@@ -124,6 +123,9 @@ export default {
 </script>
 
 <style scoped>
+.index-content {
+  direction: rtl;
+}
 /* .layout {
   display: flex;
   flex: 1 1 auto;
@@ -135,6 +137,9 @@ export default {
   flex-grow: 0;
   max-width: 100%;
 } */
+.chip-right {
+  direction: rtl;
+}
 .v-application a {
   text-decoration: none;
 }
@@ -193,6 +198,7 @@ export default {
 
 .novel-title {
   font-family: ara;
+  direction: rtl;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -201,6 +207,7 @@ export default {
   color: #356859;
 }
 .novel-snip {
+  direction: rtl;
   font-family: tajawal;
   font-style: normal;
   font-weight: normal;
@@ -212,6 +219,7 @@ export default {
   margin-bottom: -20px;
 }
 .preview-icons {
+  direction: rtl;
   margin-bottom: 5px;
   list-style-type: none;
 }

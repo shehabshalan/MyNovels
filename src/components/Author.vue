@@ -1,17 +1,18 @@
 <template>
   <div v-if="novels">
     <v-app-bar app color="#29302E" height="140">
-      <v-card-title class="mt-10">
-        <h1 class="author-name">{{novel.author}}</h1>
-        <v-card-text>
+      <router-link :to="{name: 'Index'}">
+        <v-icon class="mr-7" x-large color="#FFFBE6">mdi-arrow-left</v-icon>
+      </router-link>
+      <v-spacer></v-spacer>
+
+      <v-card-title class="mt-10 text-right author-block">
+        <h1 class="author-name text-right">{{novel.author}}</h1>
+        <v-card-text class="text-right">
           <br />
           <h3 class="mb-12">{{novel.author_occ}}</h3>
         </v-card-text>
       </v-card-title>
-      <v-spacer></v-spacer>
-      <router-link :to="{name: 'Index'}">
-        <v-icon class="mr-7" x-large color="#FFFBE6">mdi-arrow-left</v-icon>
-      </router-link>
     </v-app-bar>
 
     <v-container fluid class="novel-background">
@@ -80,19 +81,11 @@
             </div>
           </span>
         </div>
-        <!-- <div class="story-status">
-          <span class="headings">
-            <v-icon class="ml-7 mr-5 story-icons" color="#356859">mdi-book-open-variant</v-icon>القصص التي نشرها الكاتب
-            <div class="content">
-              <strong>العمر : ٣٠ عاماً</strong>
-            </div>
-          </span>
-        </div>-->
+
         <div class="story-status">
           <span class="headings">
             <v-icon class="ml-7 mr-5 story-icons" color="#356859">mdi-book-open-variant</v-icon>القصص التي نشرها الكاتب
             <div class="content">
-              <!-- <h2 v-for="nov in novels" :key="nov.id">{{nov.title}}</h2> -->
               <v-row>
                 <v-col lg="6" md="6" sm="12" xs="12" v-for="nov in novels" :key="nov.id">
                   <v-card
@@ -176,28 +169,6 @@ export default {
     return {
       novels: [],
       novel: null,
-      // novels: [
-      //   {
-      //     title: "خطوط الحياة",
-      //     snippet:
-      //       "داخل أحد الفنادق الكبرى، اجتمع سكان العمارة على طاولةٍ واحدة؛ لحضور حفل زفاف ابن صاحب العمارة... كانوا عشرة أشخاص... تناولوا نفس الطعام... لكن اثنين... اثنين فقط ماتا با...",
-      //     genres: ["رومنسي", "دراما", "غموض"],
-      //     novel_likes: 100,
-      //     novel_target: 200,
-      //     novel_views: 400,
-      //     id: "1"
-      //   },
-      //   {
-      //     title: "05/05/2125",
-      //     snippet:
-      //       "داخل أحد الفنادق الكبرى، اجتمع سكان العمارة على طاولةٍ واحدة؛ لحضور حفل زفاف ابن صاحب العمارة... كانوا عشرة أشخاص... تناولوا نفس الطعام... لكن اثنين... اثنين فقط ماتا با...",
-      //     genres: ["رومنسي", "دراما", "غموض"],
-      //     novel_likes: 100,
-      //     novel_target: 200,
-      //     novel_views: 400,
-      //     id: "2"
-      //   }
-      // ]
     };
   },
 
@@ -224,7 +195,9 @@ export default {
 
 <style scoped>
 /* CARDS */
-
+.author-block {
+  display: block;
+}
 .myButton {
   background-color: #000000;
   border-radius: 50px;
@@ -339,7 +312,6 @@ export default {
   font-style: normal;
   font-weight: normal;
   font-size: 50px;
-  margin-right: 140px !important;
 
   /* line-height: 92px; */
   margin: 0;
@@ -350,8 +322,6 @@ export default {
 }
 h3 {
   font-family: ara;
-  margin-right: 128px;
-
   font-style: normal;
   font-weight: normal;
   font-size: 32px;
@@ -408,9 +378,9 @@ ul {
   text-align: -webkit-center;
 }
 
-/* .left-content {
-  text-align: center;
-} */
+.left-content {
+  direction: rtl;
+}
 .story-chip {
   height: 48px;
   width: 103px;
@@ -441,6 +411,7 @@ ul {
 }
 
 .right-content {
+  direction: rtl;
   margin-top: 40px;
   padding-right: 70px;
 }
@@ -462,7 +433,6 @@ ul {
   margin-right: 100px;
 
   font-size: 20px;
-  /* line-height: 29px; */
   text-transform: capitalize;
   margin-top: 16px;
   margin-bottom: 40px;
