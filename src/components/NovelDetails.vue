@@ -111,7 +111,7 @@
           <span class="headings">
             <v-icon class="ml-7 mr-5 story-icons" color="#356859">mdi-account-check</v-icon>حالة القصة
             <div class="content">
-              <p>يحتاج الكاتب الى {{novel.novel_target}} طلب لإكمال القصة وقام 95 شخض بطلب إكمال القصة</p>
+              <p>يحتاج الكاتب الى 100 طلب لإكمال القصة وقام {{novel.novel_target}} شخص بطلب إكمال القصة</p>
               <strong>مع العلم بأن تكملة القصة سوف تباع ب 5 دولارات</strong>
               <div class="story-buttons mt-8">
                 <button class="story-btn mx-10" @click="requestStory">إطلب تكملة القصة</button>
@@ -175,8 +175,9 @@ export default {
       value: false,
       text: "شكراً لطلبك إكمال القصة",
       snackbar: false,
-      timeout: 2000,
-      isLiked: null,
+      timeout: 1000,
+      isLiked: false,
+      isRequested: false,
     };
   },
   computed: mapState("auth", ["user", "isLoggedIn"]),
@@ -193,6 +194,7 @@ export default {
           this.novel = doc.data();
           this.novel.id = doc.id;
           this.getIsLiked();
+          this.getIsReq();
         });
       });
     },
@@ -201,34 +203,69 @@ export default {
       let matchId = this.novel.userLikeId.find((id) => {
         if (this.user.id === id) {
           return true;
-        } else {
-          return false;
         }
       });
-      if (this.isLoggedIn && matchId == this.user.id) {
-        this.novel.novel_likes--;
-        this.color = "#000000";
-        let ref = db.collection("Novels").doc(this.novel.id);
-        ref.update({
-          userLikeId: firebase.firestore.FieldValue.arrayRemove(this.user.id),
-          novel_likes: this.novel.novel_likes,
-        });
-      } else if (this.isLoggedIn && this.user.id != matchId) {
-        this.novel.novel_likes++;
-        this.color = "#FD5523";
-        let ref = db.collection("Novels").doc(this.novel.id);
-        ref.update({
-          userLikeId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
-          novel_likes: this.novel.novel_likes,
-        });
+
+      if (this.isLiked) {
+        if (this.isLoggedIn && matchId == this.user.id) {
+          this.novel.novel_likes--;
+          this.isLiked = false;
+          this.color = "#000000";
+          let ref = db.collection("Novels").doc(this.novel.id);
+          ref.update({
+            userLikeId: firebase.firestore.FieldValue.arrayRemove(this.user.id),
+            novel_likes: this.novel.novel_likes,
+          });
+
+          window.location.reload();
+        }
+      } else if (!this.isLiked) {
+        if (this.isLoggedIn && this.user.id != matchId) {
+          this.novel.novel_likes++;
+          this.isLiked = true;
+          this.color = "#FD5523";
+          let ref = db.collection("Novels").doc(this.novel.id);
+          ref.update({
+            userLikeId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
+            novel_likes: this.novel.novel_likes,
+          });
+          window.location.reload();
+        }
       }
     },
-
+    // REQUEST CONTINUTATION
     requestStory() {
-      if (this.isLoggedIn) {
-        this.snackbar = true;
+      let matchId = this.novel.userReqId.find((id) => {
+        if (this.user.id === id) {
+          return true;
+        }
+      });
+
+      if (this.isRequested) {
+        if (this.isLoggedIn && matchId == this.user.id) {
+          this.novel.novel_target--;
+          this.isRequested = false;
+          let ref = db.collection("Novels").doc(this.novel.id);
+          ref.update({
+            userReqId: firebase.firestore.FieldValue.arrayRemove(this.user.id),
+            novel_target: this.novel.novel_target,
+          });
+
+          window.location.reload();
+        }
+      } else if (!this.isRequested) {
+        if (this.isLoggedIn && this.user.id != matchId) {
+          this.novel.novel_target++;
+          this.isRequested = true;
+          let ref = db.collection("Novels").doc(this.novel.id);
+          ref.update({
+            userReqId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
+            novel_target: this.novel.novel_target,
+          });
+          window.location.reload();
+          this.snackbar = true;
+        }
       }
-      // console.log(this.isRequested);
     },
     getIsLiked() {
       if (this.isLoggedIn) {
@@ -239,19 +276,32 @@ export default {
         });
         if (matchId === this.user.id) {
           this.color = "#FD5523";
+          this.isLiked = true;
           console.log("liked this before");
         } else {
+          this.isLiked = false;
           console.log("didn't like it before");
         }
+      }
+    },
+    getIsReq() {
+      let matchId = this.novel.userReqId.find((id) => {
+        if (this.user.id === id) {
+          return true;
+        }
+      });
+      if (matchId === this.user.id) {
+        this.isRequested = true;
+        console.log("requested this before");
+      } else {
+        this.isRequested = false;
+        console.log("didn't request it before");
       }
     },
   },
 
   created() {
     this.getNovel();
-  },
-  mounted() {
-    // this.getIsLiked();
   },
 };
 </script>
