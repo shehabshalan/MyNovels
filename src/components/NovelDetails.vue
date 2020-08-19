@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="novel && user">
     <v-app-bar app color="#29302E" height="140">
       <router-link :to="{name: 'Index'}">
         <v-icon class="mr-7" x-large color="#FFFBE6">mdi-arrow-left</v-icon>
@@ -7,27 +7,11 @@
       <SocialSharing />
       <v-spacer></v-spacer>
 
-      <h1>{{this.novel.title}}</h1>
+      <h1>{{novel.title}}</h1>
       <v-fab-transition>
         <v-btn
-          v-if="isLoggedIn"
           @click="likeStory"
-          v-show="!hidden"
-          :color="this.color"
-          fab
-          dark
-          large
-          absolute
-          bottom
-          right
-          class="like-icon"
-        >
-          <v-icon>mdi-cards-heart</v-icon>
-        </v-btn>
-        <v-btn
-          v-if="!isLoggedIn"
-          v-show="!hidden"
-          :color="this.color"
+          :color="color"
           fab
           dark
           large
@@ -130,16 +114,20 @@
               <p>يحتاج الكاتب الى {{novel.novel_target}} طلب لإكمال القصة وقام 95 شخض بطلب إكمال القصة</p>
               <strong>مع العلم بأن تكملة القصة سوف تباع ب 5 دولارات</strong>
               <div class="story-buttons mt-8">
-                <button
-                  class="story-btn mx-10"
-                  v-if="isLoggedIn"
-                  @click="requestStory"
-                >إطلب تكملة القصة</button>
-                <button class="story-btn mx-10" v-if="!isLoggedIn">إطلب تكملة القصة</button>
+                <button class="story-btn mx-10" @click="requestStory">إطلب تكملة القصة</button>
 
                 <a href="https://forms.gle/qBSF8vWFefWMQ8eK9">
                   <button class="story-btn">أعطنا رأيك الصادق بما قرأت</button>
                 </a>
+              </div>
+              <div>
+                <v-snackbar color="#29302E" v-model="snackbar" :timeout="timeout">
+                  {{ text }}
+                  <template v-slot:action="{ attrs }">
+                    <v-btn color="#fffbe6" text v-bind="attrs" @click="snackbar = false">إغلاق</v-btn>
+                  </template>
+                </v-snackbar>
+                <!-- <v-alert :value="true" dense text width="400" type="success">شكراً لطلبك إكمال القصة</v-alert> -->
               </div>
             </div>
           </span>
@@ -174,6 +162,7 @@
 import { mapState } from "vuex";
 import SocialSharing from "./SocialSharing";
 import db from "../db";
+import firebase from "../firebase";
 export default {
   name: "NovelDetails",
   components: {
@@ -182,51 +171,87 @@ export default {
   data() {
     return {
       novel: null,
-      color: null,
-      isLiked: false,
-      isRequested: false,
+      color: "#000000",
+      value: false,
+      text: "شكراً لطلبك إكمال القصة",
+      snackbar: false,
+      timeout: 2000,
+      isLiked: null,
     };
   },
   computed: mapState("auth", ["user", "isLoggedIn"]),
-
+  // "#FD5523"
+  // "#000000"
   methods: {
+    // GET NOVEL
+    getNovel() {
+      let ref = db
+        .collection("Novels")
+        .where("novel_slug", "==", this.$route.params.novel_slug);
+      ref.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          this.novel = doc.data();
+          this.novel.id = doc.id;
+          this.getIsLiked();
+        });
+      });
+    },
+    // GET USER
     likeStory() {
-      if (this.isLoggedIn && this.isLiked) {
-        this.color = "#000000";
+      let matchId = this.novel.userLikeId.find((id) => {
+        if (this.user.id === id) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (this.isLoggedIn && matchId == this.user.id) {
         this.novel.novel_likes--;
-        this.isLiked = false;
-      } else {
-        this.color = "#FD5523";
+        this.color = "#000000";
+        let ref = db.collection("Novels").doc(this.novel.id);
+        ref.update({
+          userLikeId: firebase.firestore.FieldValue.arrayRemove(this.user.id),
+          novel_likes: this.novel.novel_likes,
+        });
+      } else if (this.isLoggedIn && this.user.id != matchId) {
         this.novel.novel_likes++;
-        this.isLiked = true;
+        this.color = "#FD5523";
+        let ref = db.collection("Novels").doc(this.novel.id);
+        ref.update({
+          userLikeId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
+          novel_likes: this.novel.novel_likes,
+        });
       }
     },
+
     requestStory() {
-      if (this.isLoggedIn && this.isRequested) {
-        this.novel.novel_target--;
-        this.isRequested = false;
-      } else {
-        this.novel.novel_target++;
-        this.isRequested = true;
+      if (this.isLoggedIn) {
+        this.snackbar = true;
       }
       // console.log(this.isRequested);
     },
-    socialPop() {
-      this.$alert("Hello Vue Simple Alert.");
+    getIsLiked() {
+      if (this.isLoggedIn) {
+        let matchId = this.novel.userLikeId.find((id) => {
+          if (this.user.id === id) {
+            return true;
+          }
+        });
+        if (matchId === this.user.id) {
+          this.color = "#FD5523";
+          console.log("liked this before");
+        } else {
+          console.log("didn't like it before");
+        }
+      }
     },
   },
 
   created() {
-    let ref = db
-      .collection("Novels")
-      .where("novel_slug", "==", this.$route.params.novel_slug);
-    ref.get().then((snapshot) => {
-      snapshot.forEach((doc) => {
-        // console.log(doc.data());
-        this.novel = doc.data();
-        this.novel.id = doc.id;
-      });
-    });
+    this.getNovel();
+  },
+  mounted() {
+    // this.getIsLiked();
   },
 };
 </script>
@@ -347,9 +372,7 @@ h1 {
 .v-icon.v-icon {
   display: inline;
 }
-body {
-  background: aqua;
-}
+
 .right-content {
   direction: rtl;
   margin-top: 40px;

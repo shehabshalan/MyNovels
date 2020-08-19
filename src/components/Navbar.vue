@@ -46,7 +46,6 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-
 // import { db } from "../firebase";
 export default {
   name: "Navbar",

@@ -1,4 +1,3 @@
-
 <template>
   <div class="novel">
     <Navbar />
@@ -92,6 +91,7 @@
 import db from "../db";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { mapState } from "vuex";
 
 export default {
   name: "Index",
@@ -104,6 +104,7 @@ export default {
       novels: [],
     };
   },
+  computed: mapState("auth", ["user", "isLoggedIn"]),
 
   created() {
     db.collection("Novels")

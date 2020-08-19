@@ -15,6 +15,7 @@ firebase.auth().onAuthStateChanged((user) => {
             name: user.displayName,
             email: user.email,
             image: user.photoURL,
+
         };
         db.collection('users').doc(setUser.id).set(setUser);
         store.commit('auth/setUser', setUser);
