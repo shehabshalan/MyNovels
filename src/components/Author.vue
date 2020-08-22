@@ -1,7 +1,7 @@
 <template>
   <div v-if="novels">
     <v-app-bar app color="#29302E" height="140">
-      <router-link :to="{name: 'Index'}">
+      <router-link :to="{name: 'NovelDetails', params: {novel_slug: novel.novel_slug}}">
         <v-icon class="mr-7" x-large color="#FFFBE6">mdi-arrow-left</v-icon>
       </router-link>
       <v-spacer></v-spacer>

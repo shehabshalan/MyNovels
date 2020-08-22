@@ -4,14 +4,15 @@ import Index from '../components/Index'
 import NovelDetails from '../components/NovelDetails.vue'
 import Author from '../components/Author'
 import Read from '../components/Read'
-
+import Paypal from '../components/Paypal'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'Index',
-    component: Index
+    component: Index,
+    meta: { title: 'روايات وحكايات' },
   },
   {
     path: '/about',
@@ -24,17 +25,26 @@ const routes = [
   {
     path: '/novel-details/:novel_slug',
     name: 'NovelDetails',
-    component: NovelDetails
+    component: NovelDetails,
+    meta: { title: 'روايات وحكايات' },
   },
   {
     path: '/author/:author_slug',
     name: 'Author',
-    component: Author
+    component: Author,
+    meta: { title: 'روايات وحكايات' },
   },
   {
     path: '/read/:novel_slug',
     name: 'Read',
-    component: Read
+    component: Read,
+    meta: { title: 'روايات وحكايات' },
+  },
+  {
+    path: '/paypal/:novel_slug',
+    name: 'Paypal',
+    component: Paypal,
+    meta: { title: 'روايات وحكايات' },
   }
 ]
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="novel">
     <Navbar />
     <v-container fluid>
       <h1 class="novel-title-read text-right">تقرأ الان {{novel.title}}</h1>
@@ -76,6 +76,14 @@ export default {
     clickCallback: function (page) {
       console.log(page);
     },
+    viewCounter() {
+      this.novel.novel_views++;
+      let ref = db.collection("Novels").doc(this.novel.id);
+      ref.update({
+        novel_views: this.novel.novel_views,
+      });
+      console.log(this.novel.novel_views);
+    },
   },
 
   created() {
@@ -84,14 +92,19 @@ export default {
       .where("novel_slug", "==", this.$route.params.novel_slug);
     ref.get().then((snapshot) => {
       snapshot.forEach((doc) => {
+        console.log(doc.data());
         this.novel = doc.data();
         this.novel.id = doc.id;
+        this.viewCounter();
       });
       this.src = pdf.createLoadingTask(this.novel.novel_url);
       this.src.promise.then((pdf) => {
         this.numPages = pdf.numPages;
       });
     });
+  },
+  mounted() {
+    // this.viewCounter();
   },
 };
 </script>

@@ -9,10 +9,16 @@
 <script>
 export default {
   name: "App",
+  components: {},
 
   data: () => ({
     //
   }),
+  watch: {
+    $route(to, from) {
+      document.title = to.meta.title || from.meta.title;
+    },
+  },
 };
 </script>
 <style>

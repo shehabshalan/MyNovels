@@ -31,11 +31,18 @@
         <v-img :src="novel.cover_image" height="500" width="300" class="img-circle"></v-img>
         <div class="left-content-info">
           <ul>
-            <li>
+            <li v-if="novel.novel_view > 1000">
               <span class="headings-left-content">
                 <v-icon class="left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-eye</v-icon>
                 {{novel.novel_views}}
                 الف مشاهدة
+              </span>
+            </li>
+            <li v-else>
+              <span class="headings-left-content">
+                <v-icon class="left-story-icons" color="rgba(0, 0, 0, 0.6)">mdi-eye</v-icon>
+                {{novel.novel_views}}
+                مشاهدة
               </span>
             </li>
             <li>
@@ -59,8 +66,7 @@
                 <v-icon
                   class="left-story-icons"
                   color="rgba(0, 0, 0, 0.6)"
-                >mdi-book-open-page-variant</v-icon>
-                {{novel.novel_likes}}
+                >mdi-book-open-page-variant</v-icon>60
                 عدد الصفحات
               </span>
             </li>
@@ -114,7 +120,10 @@
               <p>يحتاج الكاتب الى 100 طلب لإكمال القصة وقام {{novel.novel_target}} شخص بطلب إكمال القصة</p>
               <strong>مع العلم بأن تكملة القصة سوف تباع ب 5 دولارات</strong>
               <div class="story-buttons mt-8">
-                <button class="story-btn mx-10" @click="requestStory">إطلب تكملة القصة</button>
+                <button
+                  class="story-btn disable-button mx-10"
+                  @click="requestStory"
+                >إطلب تكملة القصة</button>
 
                 <a href="https://forms.gle/qBSF8vWFefWMQ8eK9">
                   <button class="story-btn">أعطنا رأيك الصادق بما قرأت</button>
@@ -138,7 +147,11 @@
             <div class="content">
               <p>أحبائي اريد مساعدتكم ، عند طلب ١٠٠ شخص القصة ، سأقوم بتكملتها ، لكنني الآن لا ألك الوقت الكافي، لذلك اريد منكم الدعم</p>
               <div class="story-buttons mt-8">
-                <button class="story-btn mx-10">إدعم القصة</button>
+                <router-link :to="{name: 'Paypal', params: {novel_slug: novel.novel_slug}}">
+                  <button v-if="isLoggedIn" class="story-btn mx-10">إدعم القصة</button>
+                </router-link>
+
+                <button v-if="!isLoggedIn" class="story-btn mx-10">إدعم القصة</button>
               </div>
             </div>
           </span>
@@ -262,8 +275,7 @@ export default {
             userReqId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
             novel_target: this.novel.novel_target,
           });
-          window.location.reload();
-          this.snackbar = true;
+          window.location.reload((this.snackbar = true));
         }
       }
     },
@@ -285,23 +297,28 @@ export default {
       }
     },
     getIsReq() {
-      let matchId = this.novel.userReqId.find((id) => {
-        if (this.user.id === id) {
-          return true;
+      if (this.isLoggedIn) {
+        let matchId = this.novel.userReqId.find((id) => {
+          if (this.user.id === id) {
+            return true;
+          }
+        });
+        if (matchId === this.user.id) {
+          this.isRequested = true;
+          console.log("requested this before");
+        } else {
+          this.isRequested = false;
+          console.log("didn't request it before");
         }
-      });
-      if (matchId === this.user.id) {
-        this.isRequested = true;
-        console.log("requested this before");
-      } else {
-        this.isRequested = false;
-        console.log("didn't request it before");
       }
     },
   },
 
   created() {
     this.getNovel();
+  },
+  firestore: {
+    novel: db.collection("Novels"),
   },
 };
 </script>
