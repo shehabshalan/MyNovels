@@ -86,7 +86,7 @@ export default {
   mounted: function () {
     const script = document.createElement("script");
     script.src =
-      "https://www.paypal.com/sdk/js?client-id=AX37UvfELmmbsXU94FABgKOW3TKbxiZdwpw4E13TyAzArpl4weO4NX_lRPad620ejl8IGG5dsgmTwXXh";
+      "https://www.paypal.com/sdk/js?client-id=AaCo6YdVfPy2-0aQUtrBpg3F25dYoes5SAF6ZCTaetuS8mpMTRpSzC-_TzBfi5uFepdEYyE4j63h9LU-";
     script.addEventListener("load", this.setLoaded);
     document.body.appendChild(script);
   },

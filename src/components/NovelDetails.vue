@@ -188,8 +188,8 @@ export default {
       value: false,
       text: "شكراً لطلبك إكمال القصة",
       snackbar: false,
-      timeout: 1000,
-      isLiked: false,
+      timeout: 2000,
+      isLiked: null,
       isRequested: false,
     };
   },
@@ -212,71 +212,59 @@ export default {
       });
     },
     // GET USER
-    likeStory() {
-      let matchId = this.novel.userLikeId.find((id) => {
-        if (this.user.id === id) {
-          return true;
-        }
-      });
-
-      if (this.isLiked) {
-        if (this.isLoggedIn && matchId == this.user.id) {
-          this.novel.novel_likes--;
-          this.isLiked = false;
-          this.color = "#000000";
-          let ref = db.collection("Novels").doc(this.novel.id);
-          ref.update({
-            userLikeId: firebase.firestore.FieldValue.arrayRemove(this.user.id),
-            novel_likes: this.novel.novel_likes,
-          });
-
-          window.location.reload();
-        }
-      } else if (!this.isLiked) {
-        if (this.isLoggedIn && this.user.id != matchId) {
-          this.novel.novel_likes++;
-          this.isLiked = true;
-          this.color = "#FD5523";
-          let ref = db.collection("Novels").doc(this.novel.id);
-          ref.update({
-            userLikeId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
-            novel_likes: this.novel.novel_likes,
-          });
-          window.location.reload();
-        }
+    async likeStory() {
+      // let matchId = this.novel.userLikeId.find((id) => {
+      //   if (this.user.id === id) {
+      //     return true;
+      //   }
+      // });
+      if (this.isLoggedIn && !this.isLiked) {
+        this.novel.novel_likes++;
+        this.isLiked = true;
+        this.color = "#FD5523";
+        let ref = await db.collection("Novels").doc(this.novel.id);
+        ref.update({
+          userLikeId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
+          novel_likes: this.novel.novel_likes,
+        });
+        console.log("like check");
+      } else {
+        this.novel.novel_likes--;
+        this.isLiked = false;
+        this.color = "#000000";
+        let ref = await db.collection("Novels").doc(this.novel.id);
+        ref.update({
+          userLikeId: firebase.firestore.FieldValue.arrayRemove(this.user.id),
+          novel_likes: this.novel.novel_likes,
+        });
+        console.log("dislike check");
       }
     },
     // REQUEST CONTINUTATION
     requestStory() {
-      let matchId = this.novel.userReqId.find((id) => {
-        if (this.user.id === id) {
-          return true;
-        }
-      });
+      // let matchId = this.novel.userReqId.find((id) => {
+      //   if (this.user.id === id) {
+      //     return true;
+      //   }
+      // });
 
-      if (this.isRequested) {
-        if (this.isLoggedIn && matchId == this.user.id) {
-          this.novel.novel_target--;
-          this.isRequested = false;
-          let ref = db.collection("Novels").doc(this.novel.id);
-          ref.update({
-            userReqId: firebase.firestore.FieldValue.arrayRemove(this.user.id),
-            novel_target: this.novel.novel_target,
-          });
-
-          window.location.reload();
-        }
-      } else if (!this.isRequested) {
-        if (this.isLoggedIn && this.user.id != matchId) {
-          this.novel.novel_target++;
-          this.isRequested = true;
-          let ref = db.collection("Novels").doc(this.novel.id);
-          ref.update({
-            userReqId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
-            novel_target: this.novel.novel_target,
-          });
-          window.location.reload((this.snackbar = true));
-        }
+      if (this.isLoggedIn && this.isRequested) {
+        this.novel.novel_target--;
+        this.isRequested = false;
+        let ref = db.collection("Novels").doc(this.novel.id);
+        ref.update({
+          userReqId: firebase.firestore.FieldValue.arrayRemove(this.user.id),
+          novel_target: this.novel.novel_target,
+        });
+      } else {
+        this.novel.novel_target++;
+        this.isRequested = true;
+        let ref = db.collection("Novels").doc(this.novel.id);
+        ref.update({
+          userReqId: firebase.firestore.FieldValue.arrayUnion(this.user.id),
+          novel_target: this.novel.novel_target,
+        });
+        this.snackbar = true;
       }
     },
     getIsLiked() {
@@ -291,8 +279,8 @@ export default {
           this.isLiked = true;
           console.log("liked this before");
         } else {
-          this.isLiked = false;
           console.log("didn't like it before");
+          this.isLiked = false;
         }
       }
     },
