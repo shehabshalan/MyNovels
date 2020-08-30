@@ -1,4 +1,4 @@
-# writer-ui
+# MyNovels
 
 ## Project setup
 ```
