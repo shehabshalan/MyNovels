@@ -5,6 +5,8 @@ import router from './router'
 import store from './store/index'
 import VueSocialSharing from '../node_modules/vue-social-sharing'
 import { firestorePlugin } from 'vuefire'
+import panZoom from 'vue-panzoom'
+import VueDragscroll from 'vue-dragscroll'
 
 import Paginate from 'vuejs-paginate'
 /* eslint-disable */
@@ -12,6 +14,8 @@ import firebase from './firebase';
 import auth from './auth';
 /* eslint-enable */
 Vue.use(firestorePlugin)
+Vue.use(panZoom);
+Vue.use(VueDragscroll)
 
 Vue.config.productionTip = false
 Vue.use(Paginate)

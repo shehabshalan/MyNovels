@@ -213,11 +213,6 @@ export default {
     },
     // GET USER
     async likeStory() {
-      // let matchId = this.novel.userLikeId.find((id) => {
-      //   if (this.user.id === id) {
-      //     return true;
-      //   }
-      // });
       if (this.isLoggedIn && !this.isLiked) {
         this.novel.novel_likes++;
         this.isLiked = true;

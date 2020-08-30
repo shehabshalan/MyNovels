@@ -11,6 +11,8 @@
     "core-js": "^3.6.5",
     "firebase": "^7.16.0",
     "vue": "^2.6.11",
+    "vue-dragscroll": "^2.1.0",
+    "vue-panzoom": "^1.1.2",
     "vue-pdf": "^4.1.0",
     "vue-router": "^3.2.0",
     "vue-simple-alert": "^1.1.1",

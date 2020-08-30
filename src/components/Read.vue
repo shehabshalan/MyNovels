@@ -1,8 +1,9 @@
 <template>
-  <div v-if="novel">
+  <div v-if="novel" class="background-read">
     <Navbar />
     <v-container fluid>
       <h1 class="novel-title-read text-right">تقرأ الان {{novel.title}}</h1>
+
       <div class="text-center pages">
         <Paginate
           v-model="page"
@@ -13,7 +14,7 @@
           :next-text="'التالي >'"
           :prev-text="'< السابق'"
           style="display: inline-flex;list-style-type: none; "
-          :containerClass="'pagination'"
+          :containerClass="'pagiِnation'"
           :page-class="'page-item'"
           :page-link-class="'items'"
           :next-link-class="'next-link-class'"
@@ -30,6 +31,8 @@
           </span>
         </Paginate>
       </div>
+
+      <!-- <panZoom> -->
       <div class="novel-display container">
         <pdf
           ref="pdf"
@@ -41,6 +44,7 @@
           @page-loaded="currentPage = $event"
         ></pdf>
       </div>
+      <!-- </panZoom> -->
     </v-container>
     <Footer />
   </div>
@@ -51,6 +55,9 @@ import Footer from "./Footer";
 import pdf from "vue-pdf";
 import db from "../db";
 import Paginate from "vuejs-paginate";
+import { mapState } from "vuex";
+// import panzoom from "panzoom";
+
 // var loadPDF = pdf.createLoadingTask(
 //   "https://cdn.filestackcontent.com/wcrjf9qPTCKXV3hMXDwK"
 // );
@@ -72,6 +79,11 @@ export default {
       numPages: undefined,
     };
   },
+  // mounted() {
+  //   panzoom(this.$refs.pdf);
+  // },
+  computed: mapState("auth", ["user", "isLoggedIn"]),
+
   methods: {
     clickCallback: function (page) {
       console.log(page);
@@ -82,7 +94,19 @@ export default {
       ref.update({
         novel_views: this.novel.novel_views,
       });
-      console.log(this.novel.novel_views);
+    },
+    getCurrentPage() {
+      let ref = db
+        .collection("Read")
+        .where("novel", "==", this.$route.params.novel_slug);
+      ref.get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+          console.log(doc.data());
+          this.read = doc.data();
+          this.read.id = doc.id;
+          this.page = this.read.currentP;
+        });
+      });
     },
   },
 
@@ -92,7 +116,7 @@ export default {
       .where("novel_slug", "==", this.$route.params.novel_slug);
     ref.get().then((snapshot) => {
       snapshot.forEach((doc) => {
-        console.log(doc.data());
+        // console.log(doc.data());
         this.novel = doc.data();
         this.novel.id = doc.id;
         this.viewCounter();
@@ -102,6 +126,7 @@ export default {
         this.numPages = pdf.numPages;
       });
     });
+    // this.getCurrentPage();
   },
   mounted() {
     // this.viewCounter();
@@ -110,6 +135,9 @@ export default {
 </script>
 
 <style>
+.background-read {
+  background-color: rgb(165, 165, 165);
+}
 .pages {
   direction: rtl;
 }
